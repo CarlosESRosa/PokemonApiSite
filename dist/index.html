@@ -20,27 +20,39 @@
           <div class="col-6">
             <div class="input-group mb-3">
               <span class="input-group-text" id="basic-addon1">First Pokemon</span>
-              <input type="text" class="form-control" placeholder="Username"
+              <input id="firstPokemon" type="text" class="form-control"
+                placeholder="Username"
                 aria-label="Username" aria-describedby="basic-addon1">
             </div>
           </div>
           <div class="col-6">
             <div class="input-group mb-3">
               <span class="input-group-text" id="basic-addon1">Second Pokemon</span>
-              <input type="text" class="form-control" placeholder="Username"
+              <input id="secondPokemon" type="text" class="form-control"
+                placeholder="Username"
                 aria-label="Username" aria-describedby="basic-addon1">
             </div>
           </div>
         </div>
         <div class="row">
-          <button type="button" class="btn btn-success">Run</button>
+          <button id="runButton" type="button" class="btn btn-success">Run</button>
+        </div>
+        <div class="row">
+          <div id="colLeft" class="col-6 text-center">
+            <h3 id="colLeftH3"></h3>
+            <img id="colLeftImg" src="" alt="">
+          </div>
+          <div id="colRight" class="col-6 text-center">
+            <h3 id="colRightH3"></h3>
+            <img id="colRightImg" src="" alt="">
+          </div>
         </div>
       </div>
     </div>
-
-
     <!--//Box 1 - Compare 2 pokemons-->
 
+    <script src="js/createPokemonDivs.js"></script>
+    <script src="js/fetchPokemon.js"></script>
     <script src="js/script.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
