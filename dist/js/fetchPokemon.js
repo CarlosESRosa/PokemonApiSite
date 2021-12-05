@@ -4,3 +4,4 @@ async function fetchPokemon(pokemonName) {
   const data = response.json();
   return data;
 };
+

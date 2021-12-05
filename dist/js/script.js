@@ -1,17 +1,17 @@
 const firstInput = document.querySelector('#firstPokemon');
 const secondInput = document.querySelector('#secondPokemon');
 const button = document.querySelector('#runButton');
-const colLeft = document.querySelector('#colLeft');
-const colRight = document.querySelector('#colRight');
 
-button.addEventListener('click', () => {
-  console.log(firstInput.value);
-  console.log(secondInput.value);
+button.addEventListener('click', async () => {
+    const dataPokemonLeft = await fetchPokemon(firstInput.value.toLowerCase());
+    const dataPokemonRight = await fetchPokemon(secondInput.value.toLowerCase());
+    createPokemonLeft(dataPokemonLeft.name, dataPokemonLeft.sprites.front_default);
+    createPokemonRight(dataPokemonRight.name, dataPokemonRight.sprites.front_default)
 });
 
 window.onload = async () => {
-  const pokemonLeft = await fetchPokemon('vaporeon');
-  const pokemonRight = await fetchPokemon('flareon');
-  colLeft.innerHTML = pokemonLeft.name;
-  colRight.innerHTML = pokemonRight.name;
+  const pokemonLeft = await fetchPokemon('empoleon');
+  const pokemonRight = await fetchPokemon('milotic');
+  createPokemonLeft(pokemonLeft.name, pokemonLeft.sprites.front_default);
+  createPokemonRight(pokemonRight.name, pokemonRight.sprites.front_default)
 }
