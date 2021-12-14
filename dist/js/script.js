@@ -16,10 +16,9 @@ async function buildScreen() {
   const dataPokemonRight = await fetchPokemon(secondInput.value.toLowerCase());
   createPokemonLeft(dataPokemonLeft.name, dataPokemonLeft.sprites.front_default);
   createPokemonRight(dataPokemonRight.name, dataPokemonRight.sprites.front_default)
-  settingTableLeft(getPokemonStats(dataPokemonLeft));
-  settingTableRight(getPokemonStats(dataPokemonRight));
-}
 
+  settingTable(getPokemonStats(dataPokemonLeft), getPokemonStats(dataPokemonRight));
+}
 // Pega os status do pokemon
 function getPokemonStats(pokemon) {
   const { stats } = pokemon;
@@ -34,20 +33,70 @@ function getPokemonStats(pokemon) {
   });
 }
 
-// Monta tabela da esquerda
-function settingTableLeft(pokemonLeft) {
-  Array.from(tableLeft.children).forEach((element, index) => {
-    element.innerText = `${pokemonLeft[index].stat}: ${pokemonLeft[index].base_stat} `;
-  });
+function doCompare(pokemons, arrTableLeft, arrTableRight) {
+
+  const statsCompared = (stronger, left, right) => {
+    left.className = stronger ? 'fas fa-sort-up' : 'fas fa-sort-down';
+    left.style.color = stronger ? 'green' : 'red';    
+
+    right.className = !stronger ? 'fas fa-sort-up' : 'fas fa-sort-down';
+    right.style.color = !stronger ? 'green' : 'red';
+  } 
+
+  pokemons.forEach((pokemon, index) => {
+    const [left, right] = pokemon;    
+    const { firstElementChild: statsLeft } = arrTableLeft[index];
+    const { firstElementChild: statsRight } = arrTableRight[index];
+
+    const whoIsStronger = left > right;
+    
+    statsCompared(whoIsStronger, statsLeft, statsRight)    
+  })
 }
-// Monta tabela da direita
-function settingTableRight(pokemonRight) {
-  Array.from(tableRight.children).forEach((element, index) => {
-    element.innerText = `${pokemonRight[index].stat}: ${pokemonRight[index].base_stat} `;
+
+function settingTable(pokemonLeft, pokemonRight) {
+  const arrTableLeft = Array.from(tableLeft.children);
+  const arrTableRight = Array.from(tableRight.children)
+  const arrayLeft = []
+  const arrayRight = []
+
+  arrTableLeft.forEach((element, index) => {
+    arrayLeft.push(pokemonLeft[index].base_stat);
+    element.innerText = `${pokemonLeft[index].stat}: ${pokemonLeft[index].base_stat} `;
+    const contentAfter = document.createElement('span');
+    element.appendChild(contentAfter)
   });
+  arrTableRight.forEach((element, index) => {
+    arrayRight.push(pokemonRight[index].base_stat)
+    element.innerText = `${pokemonRight[index].stat}: ${pokemonRight[index].base_stat} `;
+    const contentAfter = document.createElement('i');
+    element.appendChild(contentAfter)
+  });
+  //Junta stats de ambos pokemons
+  const bothPokemonStats = arrayLeft.map((element, index) => {
+    return [element, arrayRight[index]]
+  });
+
+  doCompare(bothPokemonStats, arrTableLeft, arrTableRight)  
 }
 
 window.onload = async () => {
   const tableData = document.querySelector('#tableData');
   tableData.style.display = 'none';
 }
+
+
+/*
+ 
+.pokemonStats p:nth-of-type(1)::after {
+  content: '∆';
+  color: green;
+  content: '∇';
+  color: red;
+}
+ 
+var color = window.getComputedStyle(
+  document.querySelector('.element'), ':before'
+).getPropertyValue('color')
+
+*/
