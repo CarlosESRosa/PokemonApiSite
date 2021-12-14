@@ -9,9 +9,13 @@ button.addEventListener('click', async () => {
     createPokemonRight(dataPokemonRight.name, dataPokemonRight.sprites.front_default)
 });
 
+
 window.onload = async () => {
   const pokemonLeft = await fetchPokemon('empoleon');
   const pokemonRight = await fetchPokemon('milotic');
   createPokemonLeft(pokemonLeft.name, pokemonLeft.sprites.front_default);
   createPokemonRight(pokemonRight.name, pokemonRight.sprites.front_default)
+  
+  // getPokemonStats(pokemonLeft) 
+  // getPokemonStats(pokemonRight) 
 }
