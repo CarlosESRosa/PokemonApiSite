@@ -16,10 +16,9 @@ async function buildScreen() {
   const dataPokemonRight = await fetchPokemon(secondInput.value.toLowerCase());
   createPokemonLeft(dataPokemonLeft.name, dataPokemonLeft.sprites.front_default);
   createPokemonRight(dataPokemonRight.name, dataPokemonRight.sprites.front_default)
-  settingTableLeft(getPokemonStats(dataPokemonLeft));
-  settingTableRight(getPokemonStats(dataPokemonRight));
-}
+  settingTable(getPokemonStats(dataPokemonLeft), getPokemonStats(dataPokemonRight));
 
+}
 // Pega os status do pokemon
 function getPokemonStats(pokemon) {
   const { stats } = pokemon;
@@ -34,17 +33,47 @@ function getPokemonStats(pokemon) {
   });
 }
 
-// Monta tabela da esquerda
-function settingTableLeft(pokemonLeft) {
-  Array.from(tableLeft.children).forEach((element, index) => {
+function settingTable(pokemonLeft, pokemonRight) {
+  const arrTableLeft = Array.from(tableLeft.children);
+  const arrTableRight = Array.from(tableRight.children)
+  const arrayLeft = []
+  const arrayRight = []
+  arrTableLeft.forEach((element, index) => {
+    arrayLeft.push(pokemonLeft[index].base_stat);
     element.innerText = `${pokemonLeft[index].stat}: ${pokemonLeft[index].base_stat} `;
   });
-}
-// Monta tabela da direita
-function settingTableRight(pokemonRight) {
-  Array.from(tableRight.children).forEach((element, index) => {
+  arrTableRight.forEach((element, index) => {
+    arrayRight.push(pokemonRight[index].base_stat)
     element.innerText = `${pokemonRight[index].stat}: ${pokemonRight[index].base_stat} `;
   });
+  //Junta stats de ambos pokemons
+  const bothPokemonStats = arrayLeft.map((element, index) => {
+    return [element, arrayRight[index]]
+    // console.log(typeof element);
+    // return element > arrayRight[index];
+  });
+
+  bothPokemonStats.forEach((pokemon, index) => {
+    const [left, right] = pokemon;
+    if (left > right) {
+      arrTableLeft[index].style.color = 'green'
+      arrTableRight[index].style.color = 'red'
+      // arrTableLeft[index].style.color = 'g'
+    } else {
+      arrTableLeft[index].style.color = 'red'
+      arrTableRight[index].style.color = 'green'
+    }
+    //index, igual a cada linha da nossa tabela
+    // se index = 1, for mais forte do pokemon 1, pega tableleft.children[1].style.
+
+
+    //e tal linha, o pokemon 1 for mais forte
+    // Essa linha e faz alguma coisa
+  })
+
+  // console.log(teste);
+  // console.log(arrayLeft);
+  // console.log(arrayRight);
 }
 
 window.onload = async () => {
