@@ -34,23 +34,18 @@ function getPokemonStats(pokemon) {
 }
 
 function doCompare(pokemons, arrTableLeft, arrTableRight) {
-
-  const statsCompared = (stronger, left, right) => {
-    left.className = stronger ? 'fas fa-sort-up' : 'fas fa-sort-down';
-    left.style.color = stronger ? 'green' : 'red';    
-
-    right.className = !stronger ? 'fas fa-sort-up' : 'fas fa-sort-down';
-    right.style.color = !stronger ? 'green' : 'red';
-  } 
-
   pokemons.forEach((pokemon, index) => {
     const [left, right] = pokemon;    
     const { firstElementChild: statsLeft } = arrTableLeft[index];
     const { firstElementChild: statsRight } = arrTableRight[index];
 
-    const whoIsStronger = left > right;
-    
-    statsCompared(whoIsStronger, statsLeft, statsRight)    
+    const leftStronger = left > right;
+
+    statsLeft.className = leftStronger ? 'fas fa-sort-up' : 'fas fa-sort-down';
+    statsLeft.style.color = leftStronger ? 'green' : 'red';    
+
+    statsRight.className = !leftStronger ? 'fas fa-sort-up' : 'fas fa-sort-down';
+    statsRight.style.color = !leftStronger ? 'green' : 'red';       
   })
 }
 
