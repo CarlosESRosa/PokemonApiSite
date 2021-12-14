@@ -16,8 +16,8 @@ async function buildScreen() {
   const dataPokemonRight = await fetchPokemon(secondInput.value.toLowerCase());
   createPokemonLeft(dataPokemonLeft.name, dataPokemonLeft.sprites.front_default);
   createPokemonRight(dataPokemonRight.name, dataPokemonRight.sprites.front_default)
-  settingTable(getPokemonStats(dataPokemonLeft), getPokemonStats(dataPokemonRight));
 
+  settingTable(getPokemonStats(dataPokemonLeft), getPokemonStats(dataPokemonRight));
 }
 // Pega os status do pokemon
 function getPokemonStats(pokemon) {
@@ -33,11 +33,33 @@ function getPokemonStats(pokemon) {
   });
 }
 
+function doCompare(pokemons, arrTableLeft, arrTableRight) {
+
+  const statsCompared = (stronger, left, right) => {
+    left.className = stronger ? 'fas fa-sort-up' : 'fas fa-sort-down';
+    left.style.color = stronger ? 'green' : 'red';    
+
+    right.className = !stronger ? 'fas fa-sort-up' : 'fas fa-sort-down';
+    right.style.color = !stronger ? 'green' : 'red';
+  } 
+
+  pokemons.forEach((pokemon, index) => {
+    const [left, right] = pokemon;    
+    const { firstElementChild: statsLeft } = arrTableLeft[index];
+    const { firstElementChild: statsRight } = arrTableRight[index];
+
+    const whoIsStronger = left > right;
+    
+    statsCompared(whoIsStronger, statsLeft, statsRight)    
+  })
+}
+
 function settingTable(pokemonLeft, pokemonRight) {
   const arrTableLeft = Array.from(tableLeft.children);
   const arrTableRight = Array.from(tableRight.children)
   const arrayLeft = []
   const arrayRight = []
+
   arrTableLeft.forEach((element, index) => {
     arrayLeft.push(pokemonLeft[index].base_stat);
     element.innerText = `${pokemonLeft[index].stat}: ${pokemonLeft[index].base_stat} `;
@@ -55,27 +77,7 @@ function settingTable(pokemonLeft, pokemonRight) {
     return [element, arrayRight[index]]
   });
 
-
-
-  bothPokemonStats.forEach((pokemon, index) => {
-    const [left, right] = pokemon;    
-    const { firstElementChild: statsLeft } = arrTableLeft[index];
-    const { firstElementChild: statsRight } = arrTableRight[index];
-
-    if (left > right) {
-      statsLeft.className = 'fas fa-sort-up';
-      statsLeft.style.color = 'green';  
-      
-      statsRight.className = 'fas fa-sort-down';
-      statsRight.style.color = 'red';  
-    } else {
-      statsRight.className = 'fas fa-sort-up';
-      statsRight.style.color = 'green';  
-      
-      statsLeft.className = 'fas fa-sort-down';
-      statsLeft.style.color = 'red';        
-    }
-  })
+  doCompare(bothPokemonStats, arrTableLeft, arrTableRight)  
 }
 
 window.onload = async () => {
