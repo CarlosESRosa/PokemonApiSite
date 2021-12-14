@@ -9,6 +9,15 @@ button.addEventListener('click', async () => {
     createPokemonRight(dataPokemonRight.name, dataPokemonRight.sprites.front_default)
 });
 
+function getPokemonStats(pokemon) {
+  const { stats } = pokemon;
+  const [hp, attack, defense, specialAttack, specialDefense, speed] = stats;
+  
+  return stats.map((item) => {
+    const { stat, base_stat} = item;
+    console.log(stat.name, base_stat)
+  });
+}
 
 window.onload = async () => {
   const pokemonLeft = await fetchPokemon('empoleon');
