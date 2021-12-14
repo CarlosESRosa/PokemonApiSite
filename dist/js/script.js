@@ -41,26 +41,39 @@ function settingTable(pokemonLeft, pokemonRight) {
   arrTableLeft.forEach((element, index) => {
     arrayLeft.push(pokemonLeft[index].base_stat);
     element.innerText = `${pokemonLeft[index].stat}: ${pokemonLeft[index].base_stat} `;
+    const contentAfter = document.createElement('span');
+    element.appendChild(contentAfter)
   });
   arrTableRight.forEach((element, index) => {
     arrayRight.push(pokemonRight[index].base_stat)
     element.innerText = `${pokemonRight[index].stat}: ${pokemonRight[index].base_stat} `;
+    const contentAfter = document.createElement('i');
+    element.appendChild(contentAfter)
   });
   //Junta stats de ambos pokemons
   const bothPokemonStats = arrayLeft.map((element, index) => {
     return [element, arrayRight[index]]
-    // console.log(typeof element);
-    // return element > arrayRight[index];
   });
 
+
+
   bothPokemonStats.forEach((pokemon, index) => {
-    const [left, right] = pokemon;
+    const [left, right] = pokemon;    
+    const { firstElementChild: statsLeft } = arrTableLeft[index];
+    const { firstElementChild: statsRight } = arrTableRight[index];
+
     if (left > right) {
-      arrTableLeft[index].style.color = 'green'
-      arrTableRight[index].style.color = 'red'
+      statsLeft.className = 'fas fa-sort-up';
+      statsLeft.style.color = 'green';  
+      
+      statsRight.className = 'fas fa-sort-down';
+      statsRight.style.color = 'red';  
     } else {
-      arrTableLeft[index].style.color = 'red'
-      arrTableRight[index].style.color = 'green'
+      statsRight.className = 'fas fa-sort-up';
+      statsRight.style.color = 'green';  
+      
+      statsLeft.className = 'fas fa-sort-down';
+      statsLeft.style.color = 'red';        
     }
   })
 }
