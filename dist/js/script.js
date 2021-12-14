@@ -58,25 +58,30 @@ function settingTable(pokemonLeft, pokemonRight) {
     if (left > right) {
       arrTableLeft[index].style.color = 'green'
       arrTableRight[index].style.color = 'red'
-      // arrTableLeft[index].style.color = 'g'
     } else {
       arrTableLeft[index].style.color = 'red'
       arrTableRight[index].style.color = 'green'
     }
-    //index, igual a cada linha da nossa tabela
-    // se index = 1, for mais forte do pokemon 1, pega tableleft.children[1].style.
-
-
-    //e tal linha, o pokemon 1 for mais forte
-    // Essa linha e faz alguma coisa
   })
-
-  // console.log(teste);
-  // console.log(arrayLeft);
-  // console.log(arrayRight);
 }
 
 window.onload = async () => {
   const tableData = document.querySelector('#tableData');
   tableData.style.display = 'none';
 }
+
+
+/*
+ 
+.pokemonStats p:nth-of-type(1)::after {
+  content: '∆';
+  color: green;
+  content: '∇';
+  color: red;
+}
+ 
+var color = window.getComputedStyle(
+  document.querySelector('.element'), ':before'
+).getPropertyValue('color')
+
+*/
